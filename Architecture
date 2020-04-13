@@ -1,0 +1,23 @@
+Niche : Books
+Added Value : Help Start Reading Books
+Application Type : Progressive Web App
+
+List of Functionnalitys:
+    - Search for Books (Get Book Informations)
+    - Create Reading Lists
+    - Create Objectives (Books Per Year)
+    - Plan Reading Sessions (Start small)
+    - Push Notifications (Reminders)
+    
+Web Services :
+    - Books Reasearch (Google Books Api)
+    - Books Management (Reading List)
+    - Objectives and Reading Sessions
+    - Authentification
+
+
+Front-End:
+    Pages :
+        - Search Page
+        - Library Page
+
