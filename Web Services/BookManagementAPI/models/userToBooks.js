@@ -6,7 +6,7 @@ var userToBooks = new Schema({
   books: [{
     id: { type : String , required : true },
     title: { type : String , required : true },
-    author: { type : String , required : true },
+    authors: { type : String , required : true },
   }],
 });
 

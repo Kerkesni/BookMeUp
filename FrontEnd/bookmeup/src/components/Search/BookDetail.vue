@@ -14,17 +14,25 @@
     <span id="publishData"
       ><b>Published Date: </b>{{ data.publishedDate }}</span
     >
+    <v-btn color="primary" @click="addToLibrary" v-if="!exists"
+      >Add To Library</v-btn
+    >
+    <v-btn color="error" @click="removeFromLibrary" v-else
+      >Remove From Library</v-btn
+    >
     <v-btn @click="$emit('deselect')">Close</v-btn>
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
+
 export default {
   props: ["id"],
   data() {
     return {
-      data: {}
+      data: {},
+      exists: false
     };
   },
   watch: {
@@ -36,6 +44,9 @@ export default {
     fetchData: function() {
       axios.get(this.$endpoints.DETAILS + this.id).then(res => {
         this.data = res.data;
+        this.$store
+          .dispatch("bookExists", this.id)
+          .then(res => (this.exists = res));
       });
     },
     formatAuthors: function(authors) {
@@ -45,6 +56,40 @@ export default {
       }
       tmp = tmp.substring(0, tmp.length - 2);
       return tmp;
+    },
+    addToLibrary: function() {
+      axios
+        .post(this.$endpoints.ADDBOOK, {
+          userId: this.$store.getters.getUserId,
+          book: {
+            id: this.id,
+            title: this.data.title,
+            authors: this.formatAuthors(this.data.authors)
+          }
+        })
+        .then(() => {
+          let book = this.data;
+          book.id = this.id;
+          this.$store.commit("addBook", book);
+          this.exists = true;
+          this.$toasted.success("Book Added");
+        })
+        .catch(() => {
+          this.$toasted.error("An Error Occured");
+        });
+    },
+    removeFromLibrary: function() {
+      let userId = this.$store.getters.getUserId;
+      axios
+        .delete(this.$endpoints.DELBOOK + userId + "/" + this.id)
+        .then(()=>{
+          this.$store.commit('removeBook', this.id)
+          this.exists = false
+          this.$toasted.success("Book removed");
+        })
+        .catch(()=>{
+          this.$toasted.error("Error while removing the book");
+        });
     }
   },
   mounted() {

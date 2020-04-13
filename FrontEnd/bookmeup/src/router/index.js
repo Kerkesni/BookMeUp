@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
+import Library from '../views/Library.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ Vue.use(VueRouter)
     path: '/Search',
     name: 'Search',
     component: Search
+  },
+  {
+    path: '/Library',
+    name: 'Library',
+    component: Library
   },
 ]
 
