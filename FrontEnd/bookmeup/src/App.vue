@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-content>
-      <navBar/>
+      <navBar />
       <router-view></router-view>
     </v-content>
   </v-app>
@@ -9,25 +9,26 @@
 
 <script>
 import navBar from "./components/NavBar";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   components: {
-    navBar
+    navBar,
   },
   methods: {
-    loadLibrary : function(){
-      axios.get(this.$endpoints.GETBOOKS+this.$store.getters.getUserId)
-      .then(res =>{
-        this.$store.commit('setLibrary', res.data)
-      })
-      .catch(()=>{
+    loadLibrary: function() {
+      axios
+        .get(this.$endpoints.GETBOOKS + this.$store.getters.getUserId)
+        .then((res) => {
+          this.$store.commit("setLibrary", res.data);
+        })
+        .catch(() => {
           this.$toasted.error("Error while Loading Library");
-      })
-    }
+        });
+    },
   },
   mounted() {
-    this.loadLibrary()
+    if (this.$store.getters.getUserId) this.loadLibrary();
   },
 };
 </script>

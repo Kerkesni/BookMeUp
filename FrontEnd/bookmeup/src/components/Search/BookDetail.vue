@@ -26,6 +26,7 @@
 
 <script>
 import axios from "axios";
+import _ from 'lodash'
 
 export default {
   props: ["id"],
@@ -64,12 +65,14 @@ export default {
           book: {
             id: this.id,
             title: this.data.title,
-            authors: this.formatAuthors(this.data.authors)
+            authors: this.formatAuthors(this.data.authors),
+            thumbnail: this.data.thumbnail
           }
         })
         .then(() => {
-          let book = this.data;
+          let book = _.cloneDeep(this.data);
           book.id = this.id;
+          book.authors = this.formatAuthors(this.data.authors);
           this.$store.commit("addBook", book);
           this.exists = true;
           this.$toasted.success("Book Added");

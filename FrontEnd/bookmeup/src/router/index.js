@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
 import Library from '../views/Library.vue'
+import Book from '../views/Book.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ Vue.use(VueRouter)
     path: '/Library',
     name: 'Library',
     component: Library
+  },
+  {
+    path: '/Book/:id',
+    name: 'Book',
+    component: Book
   },
 ]
 

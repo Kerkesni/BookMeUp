@@ -1,25 +1,22 @@
 <template>
-  <div class="container">
-    <v-card
-      outlined
-      v-for="(item, index) in list"
-      :key="index"
-      @click="$emit('select', item.id)"
-    >
-      <span id="image">
-        <img :src="item.thumbnail" style="margin:auto" />
-      </span>
-      <span id="info">
-        <v-card-title>{{ item.title }}</v-card-title>
-        <v-card-subtitle>{{ formatAuthors(item.authors) }}</v-card-subtitle>
-      </span>
-    </v-card>
-  </div>
+  <v-row :class="{ selected: selected }">
+    <v-col v-for="(item, index) in list" :key="index" cols="12">
+      <v-card outlined @click="$emit('select', item.id)">
+        <span class="image_area">
+          <img id="image" :src="item.thumbnail" />
+        </span>
+        <span id="data">
+          <v-card-title>{{ item.title }}</v-card-title>
+          <v-card-subtitle>{{ formatAuthors(item.authors) }}</v-card-subtitle>
+        </span>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
 export default {
-  props: ["list"],
+  props: ["list", "selected"],
   methods: {
     formatAuthors: function(authors) {
       let tmp = "";
@@ -28,34 +25,48 @@ export default {
       }
       tmp = tmp.substring(0, tmp.length - 2);
       return tmp;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@media screen and (max-width: 600px) {
-  .container {
-    width: 90%;
+@media screen and (min-width: 1000px) {
+  .row {
+    display: block;
+    width: 40%;
+    margin: auto;
+
+    &.selected {
+      width: 70%;
+    }
+
     .v-card {
-      display: inline-flex;
-      width: 100%;
-      margin-bottom: 1em;
-      #image {
-        padding: 0.3em;
+      display: flex;
+      .image_area {
+        padding: 0.2rem;
+        height: 204px;
+        #image {
+          height: 100%;
+        }
+      }
+      .data {
+        overflow: auto;
       }
     }
   }
 }
-@media screen and (min-width: 1000px) {
-  .container {
-    width: 50%;
-    .v-card {
-      display: flex;
-      margin-bottom: 1em;
-      #image {
-        padding: 1em;
-      }
+@media screen and (max-width: 600px) {
+  .v-card {
+    padding: 0.1em;
+    display: flex;
+    margin-bottom: 1em;
+    .image_area {
+      padding: 0.1rem;
+    }
+    .data {
+      width: 70%;
+      overflow: auto;
     }
   }
 }

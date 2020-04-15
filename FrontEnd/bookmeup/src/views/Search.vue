@@ -11,13 +11,13 @@
       <v-btn class="button" @click="Search">Search</v-btn>
     </div>
     <v-row class="Results">
-      <v-col :class="{hide : selectedId}">
+      <v-col :class="{ hide: selectedId }">
         <v-skeleton-loader
           type="article"
           class="loader"
           v-if="isLoading"
         ></v-skeleton-loader>
-        <SearchResults :list="results" @select="Select" v-else />
+        <SearchResults :list="results" :selected="selectedId" @select="Select" v-else />
       </v-col>
       <v-col v-if="selectedId" id="detail">
         <BookDetail :id="selectedId" @deselect="Deselect" />
@@ -34,14 +34,14 @@ import axios from "axios";
 export default {
   components: {
     SearchResults,
-    BookDetail
+    BookDetail,
   },
   data() {
     return {
       results: [],
       selectedId: "",
       title: "",
-      isLoading: false
+      isLoading: false,
     };
   },
   methods: {
@@ -49,7 +49,7 @@ export default {
       if (!this.title) return;
       this.isLoading = true;
       let formatted_title = this.title.replace(/ /g, "+");
-      axios.get(this.$endpoints.SEARCH + formatted_title).then(res => {
+      axios.get(this.$endpoints.SEARCH + formatted_title).then((res) => {
         this.results = res.data;
       });
       this.isLoading = false;
@@ -59,8 +59,8 @@ export default {
     },
     Deselect: function() {
       this.selectedId = "";
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -79,7 +79,7 @@ export default {
     margin: auto;
     width: 50%;
   }
-  .hide{
+  .hide {
     display: none;
   }
   .Results {

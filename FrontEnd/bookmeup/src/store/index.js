@@ -17,7 +17,7 @@ export default new Vuex.Store({
     setLibrary: (state, lib) => {
       state.library = lib
     },
-    setUserId: (state, id) =>{
+    setUserId: (state, id) => {
       state.userId = id
     },
     addBook: (state, book) => {
@@ -30,8 +30,12 @@ export default new Vuex.Store({
   },
   actions: {
     bookExists: (context, id) => {
-      let result = _.find(context.state.library, b=>b.id === id)
-      return result? true: false
+      let result = _.find(context.state.library, b => b.id === id)
+      return result ? true : false
+    },
+    findBookById: (context, id) => {
+      let result = _.find(context.state.library, b => b.id === id)
+      return result
     }
   },
 })
