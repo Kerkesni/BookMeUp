@@ -17,7 +17,12 @@
           class="loader"
           v-if="isLoading"
         ></v-skeleton-loader>
-        <SearchResults :list="results" :selected="selectedId" @select="Select" v-else />
+        <SearchResults
+          :list="results"
+          :selected="selectedId"
+          @select="Select"
+          v-else
+        />
       </v-col>
       <v-col v-if="selectedId" id="detail">
         <BookDetail :id="selectedId" @deselect="Deselect" />
@@ -49,9 +54,13 @@ export default {
       if (!this.title) return;
       this.isLoading = true;
       let formatted_title = this.title.replace(/ /g, "+");
-      axios.get(this.$endpoints.SEARCH + formatted_title).then((res) => {
-        this.results = res.data;
-      });
+      axios
+        .get(this.$endpoints.SEARCH + formatted_title, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          this.results = res.data;
+        });
       this.isLoading = false;
     },
     Select: function(id) {

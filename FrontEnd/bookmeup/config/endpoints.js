@@ -1,7 +1,9 @@
 module.exports = {
-    SEARCH: "http://localhost:3000/searchBook/",
-    DETAILS: "http://localhost:3000/getBookDetail/",
-    ADDBOOK: "http://localhost:3001/addBook/",
-    DELBOOK: "http://localhost:3001/delBook/",
-    GETBOOKS: "http://localhost:3001/getBooks/",
+    SEARCH: "http://localhost:3000/search/searchBook/",
+    DETAILS: "http://localhost:3000/search/getBookDetail/",
+    ADDBOOK: "http://localhost:3000/manage/addBook/",
+    DELBOOK: "http://localhost:3000/manage/delBook/",
+    GETBOOKS: "http://localhost:3000/manage/getBooks/",
+    LOGIN: "http://localhost:3000/auth/login/",
+    SIGNUP: "http://localhost:3000/auth/signup/",
 }

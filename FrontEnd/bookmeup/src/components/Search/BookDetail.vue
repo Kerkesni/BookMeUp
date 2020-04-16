@@ -26,29 +26,31 @@
 
 <script>
 import axios from "axios";
-import _ from 'lodash'
+import _ from "lodash";
 
 export default {
   props: ["id"],
   data() {
     return {
       data: {},
-      exists: false
+      exists: false,
     };
   },
   watch: {
     id: function() {
       this.fetchData();
-    }
+    },
   },
   methods: {
     fetchData: function() {
-      axios.get(this.$endpoints.DETAILS + this.id).then(res => {
-        this.data = res.data;
-        this.$store
-          .dispatch("bookExists", this.id)
-          .then(res => (this.exists = res));
-      });
+      axios
+        .get(this.$endpoints.DETAILS + this.id, { withCredentials: true })
+        .then((res) => {
+          this.data = res.data;
+          this.$store
+            .dispatch("bookExists", this.id)
+            .then((res) => (this.exists = res));
+        });
     },
     formatAuthors: function(authors) {
       let tmp = "";
@@ -60,15 +62,19 @@ export default {
     },
     addToLibrary: function() {
       axios
-        .post(this.$endpoints.ADDBOOK, {
-          userId: this.$store.getters.getUserId,
-          book: {
-            id: this.id,
-            title: this.data.title,
-            authors: this.formatAuthors(this.data.authors),
-            thumbnail: this.data.thumbnail
-          }
-        })
+        .post(
+          this.$endpoints.ADDBOOK,
+          {
+            userId: this.$store.getters.getUserId,
+            book: {
+              id: this.id,
+              title: this.data.title,
+              authors: this.formatAuthors(this.data.authors),
+              thumbnail: this.data.thumbnail,
+            },
+          },
+          { withCredentials: true }
+        )
         .then(() => {
           let book = _.cloneDeep(this.data);
           book.id = this.id;
@@ -84,20 +90,22 @@ export default {
     removeFromLibrary: function() {
       let userId = this.$store.getters.getUserId;
       axios
-        .delete(this.$endpoints.DELBOOK + userId + "/" + this.id)
-        .then(()=>{
-          this.$store.commit('removeBook', this.id)
-          this.exists = false
+        .delete(this.$endpoints.DELBOOK + userId + "/" + this.id, {
+          withCredentials: true,
+        })
+        .then(() => {
+          this.$store.commit("removeBook", this.id);
+          this.exists = false;
           this.$toasted.success("Book removed");
         })
-        .catch(()=>{
+        .catch(() => {
           this.$toasted.error("Error while removing the book");
         });
-    }
+    },
   },
   mounted() {
     this.fetchData();
-  }
+  },
 };
 </script>
 

@@ -3,7 +3,6 @@ const apis = require('../global')
 const _ = require("lodash")
 
 module.exports = (req, res, next) => {
-
     if (typeof (req.params.title) !== "string") {
         res.send('Invalid Title')
         return

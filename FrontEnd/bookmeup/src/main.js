@@ -6,6 +6,12 @@ import vuetify from './plugins/vuetify';
 import endpoints from '../config/endpoints'
 import Sticky from 'vue-sticky-directive'
 import Toasted from 'vue-toasted';
+import VueCookies from "vue-cookies"
+import Vuelidate from "vuelidate"
+
+
+import default_Layout from './layouts/Default.vue'
+import noTopBar_Layout from './layouts/NoTopBar.vue'
 
 let toasted_options = {
   theme: "toasted-primary",
@@ -13,12 +19,17 @@ let toasted_options = {
   duration: 5000
 }
 
+Vue.use(Vuelidate)
+Vue.use(VueCookies)
 Vue.use(Toasted, toasted_options)
 Vue.use(Sticky)
 
 Vue.config.productionTip = false
 
 Vue.prototype.$endpoints = endpoints
+
+Vue.component("default-layout", default_Layout)
+Vue.component("unauthenticated-layout", noTopBar_Layout)
 
 new Vue({
   router,

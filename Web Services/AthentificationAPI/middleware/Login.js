@@ -3,8 +3,9 @@ const Joi = require('@hapi/joi');
 const User = require('../models/User')
 var jwt = require('jsonwebtoken');
 
+
 const jwtKey = 'my_secret_key'
-const jwtExpirySeconds = 24*60*60
+const jwtExpirySeconds = 24 * 60 * 60
 
 const schema = Joi.object({
     email: Joi.string()
@@ -43,10 +44,11 @@ module.exports = (req, res, next) => {
                         }, jwtKey, {
                             expiresIn: jwtExpirySeconds
                         })
-                        res.cookie('token', token, {
-                            maxAge: jwtExpirySeconds * 1000
+                        res.cookie('jwtToken', token, {
+                            maxAge: jwtExpirySeconds * 1000,
+                            httpOnly: true
                         })
-                        res.send("Logged in")
+                        res.send(token)
                     } else {
                         res.send("Email or Password Incorrect")
                     }

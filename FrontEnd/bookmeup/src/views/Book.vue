@@ -10,12 +10,13 @@
       <v-dialog v-model="dialog" max-width="290">
         <v-card>
           <v-card-title class="headline">Warning</v-card-title>
-          <v-card-text>All the data related to this book will be destroyed, this action is not reversible</v-card-text>
+          <v-card-text
+            >All the data related to this book will be destroyed, this action is
+            not reversible</v-card-text
+          >
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="darken-1" text @click="dialog = false"
-              >Keep</v-btn
-            >
+            <v-btn color="darken-1" text @click="dialog = false">Keep</v-btn>
             <v-btn color="red darken-1" text @click="removeBook">Delete</v-btn>
           </v-card-actions>
         </v-card>
@@ -50,7 +51,9 @@ export default {
       this.dialog = false;
       let userId = this.$store.getters.getUserId;
       axios
-        .delete(this.$endpoints.DELBOOK + userId + "/" + this.data.id)
+        .delete(this.$endpoints.DELBOOK + userId + "/" + this.data.id, {
+          withCredentials: true,
+        })
         .then(() => {
           this.$store.commit("removeBook", this.data.id);
           this.exists = false;

@@ -1,34 +1,27 @@
 <template>
   <v-app>
-    <v-content>
-      <navBar />
+    <v-content :is="layout">
       <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import navBar from "./components/NavBar";
-import axios from "axios";
-
 export default {
-  components: {
-    navBar,
-  },
-  methods: {
-    loadLibrary: function() {
-      axios
-        .get(this.$endpoints.GETBOOKS + this.$store.getters.getUserId)
-        .then((res) => {
-          this.$store.commit("setLibrary", res.data);
-        })
-        .catch(() => {
-          this.$toasted.error("Error while Loading Library");
-        });
+  computed: {
+    layout() {
+      return (this.$route.meta.layout || "default") + "-layout";
     },
   },
-  mounted() {
-    if (this.$store.getters.getUserId) this.loadLibrary();
+  methods: {
+    getJWTPayload() {
+      const payload = this.$cookies.get("jwtPayload");
+      return payload;
+    },
+  },
+  created() {
+    const payload = this.getJWTPayload();
+    if (payload) this.$store.dispatch("updateUserData", payload);
   },
 };
 </script>
