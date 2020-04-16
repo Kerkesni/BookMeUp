@@ -7,6 +7,7 @@ var userToBooks = new Schema({
     id: { type : String , required : true },
     title: { type : String , required : true },
     authors: { type : String , required : true },
+    thumbnail: { type : String , required : true },
   }],
 });
 

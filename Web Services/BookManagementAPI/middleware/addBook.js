@@ -6,10 +6,11 @@ const Joi = require('@hapi/joi');
 const schema = Joi.object({
     userId: Joi.string()
         .required(),
-    book : Joi.object().keys({
+    book: Joi.object().keys({
         id: Joi.string().required(),
         title: Joi.string().required(),
         authors: Joi.string().required(),
+        thumbnail: Joi.string().required(),
     })
 })
 
@@ -20,7 +21,6 @@ module.exports = (req, res, next) => {
         res.send("Wrong Data Schema")
         return
     }
-
     userToBook.findOne({
             userId: data.userId
         })

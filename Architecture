@@ -5,13 +5,14 @@ Application Type : Progressive Web App
 List of Functionnalitys:
     - Search for Books (Get Book Informations)
     - Create Reading Lists
-    - Create Objectives (Books Per Year)
-    - Plan Reading Sessions (Start small)
+    - Write Notes
+    - Create Objectives (Books Per Year, plan reading sessions, graphes, track progress, set books to read)
+    - Sharing Possibility
     - Push Notifications (Reminders)
-    
+
 Web Services :
     - Books Reasearch (Google Books Api)
-    - Books Management (Reading List)
+    - Books Management (Library, notes)
     - Objectives and Reading Sessions
     - Authentification
 
@@ -20,3 +21,11 @@ Front-End:
         - Search Page
         - Library Page
         - Home Page
+        - Specific Book Page
+        - Authentication Pages
+
+TODO
+Authentification: Back and Front
+Notes : Back and Front
+Objectives: Back and Front
+Sharing : Back and Front
