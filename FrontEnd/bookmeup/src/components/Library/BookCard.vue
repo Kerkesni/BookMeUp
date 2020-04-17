@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined class="card" @click="showBook">
+  <v-card class="card" @click="showBook">
     <span class="image_area">
       <img id="image" :src="data.thumbnail" />
     </span>

@@ -1,19 +1,21 @@
 <template>
-  <v-card outlined v-sticky v-if="data" class="detail">
-    <span id="title">{{ data.title }}</span>
-    <span id="authors">by {{ formatAuthors(data.authors) }}</span>
-    <span id="description"
-      ><b>Description: </b>
-      <p v-html="data.description"></p
-    ></span>
-    <span id="categories"
-      ><b>categories: </b>{{ formatAuthors(data.categories) || "none" }}</span
-    >
-    <span id="pages"><b>Number of Pages:</b> {{ data.pageCount }}</span>
-    <span id="publisher"><b>Publisher: </b>{{ data.publisher }}</span>
-    <span id="publishData"
-      ><b>Published Date: </b>{{ data.publishedDate }}</span
-    >
+  <div v-sticky class="container">
+    <v-card v-if="data" class="detail">
+      <span id="title">{{ data.title }}</span>
+      <span id="authors">by {{ formatAuthors(data.authors) }}</span>
+      <span id="description"
+        ><b>Description: </b>
+        <p v-html="data.description"></p
+      ></span>
+      <span id="categories"
+        ><b>categories: </b>{{ formatAuthors(data.categories) || "none" }}</span
+      >
+      <span id="pages"><b>Number of Pages:</b> {{ data.pageCount }}</span>
+      <span id="publisher"><b>Publisher: </b>{{ data.publisher }}</span>
+      <span id="publishData"
+        ><b>Published Date: </b>{{ data.publishedDate }}</span
+      >
+    </v-card>
     <v-btn color="primary" @click="addToLibrary" v-if="!exists"
       >Add To Library</v-btn
     >
@@ -21,7 +23,7 @@
       >Remove From Library</v-btn
     >
     <v-btn @click="$emit('deselect')">Close</v-btn>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -67,7 +69,7 @@ export default {
           {
             userId: this.$store.getters.getUserId,
             book: {
-              id: this.id,
+              _id: this.id,
               title: this.data.title,
               authors: this.formatAuthors(this.data.authors),
               thumbnail: this.data.thumbnail,
@@ -110,23 +112,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.detail {
-  display: grid;
-  overflow: auto;
-  #title {
-    text-align: -webkit-center;
-    font-size: xx-large;
-  }
-  #authors {
-    text-align: -webkit-center;
-    font-size: larger;
-  }
-  #description {
-    text-align: justify;
-    font-size: medium;
-  }
-  * {
-    padding: 0.5em;
+.container {
+    display: grid;
+  .detail {
+    display: grid;
+    max-height: 80vh;
+    overflow: auto;
+    #title {
+      text-align: -webkit-center;
+      font-size: xx-large;
+    }
+    #authors {
+      text-align: -webkit-center;
+      font-size: larger;
+    }
+    #description {
+      text-align: justify;
+      font-size: medium;
+    }
+    * {
+      padding: 0.5em;
+    }
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-row :class="{ selected: selected }">
     <v-col v-for="(item, index) in list" :key="index" cols="12">
-      <v-card outlined @click="$emit('select', item.id)">
+      <v-card @click="$emit('select', item.id)">
         <span class="image_area">
           <img id="image" :src="item.thumbnail" />
         </span>

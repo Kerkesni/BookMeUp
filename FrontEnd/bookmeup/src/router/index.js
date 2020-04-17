@@ -14,12 +14,12 @@ Vue.use(VueRouter)
 const loadTokenFromCookie = () => {
   const payload = Vue.$cookies.get("jwtPayload")
   if (payload !== null) {
-    store.dispatch('updateLoggedIn', payload)
+    store.dispatch('updateUserData', payload)
     return true
   } else return false
 }
 
-const isLogged = () => store.getters.getLogedIn || loadTokenFromCookie()
+const isLogged = () => store.getters.getLoggedIn || loadTokenFromCookie()
 
 const routes = [{
     path: '/',

@@ -5,7 +5,7 @@
       type="card, text@2"
       v-if="!data"
     ></v-skeleton-loader>
-    <v-card outlined v-else>
+    <v-card v-else>
       <div class="image_container">
         <img :src="data.thumbnail" alt="" />
       </div>
@@ -19,9 +19,20 @@
 </template>
 
 <script>
-
 export default {
-  props: ["data"],
+  data() {
+    return {
+      id: "",
+    };
+  },
+  computed: {
+    data: function() {
+      return this.$store.getters.getLibrary.find((book) => book.id === this.id);
+    },
+  },
+  mounted() {
+    this.id = this.$route.params.id;
+  },
 };
 </script>
 
@@ -31,8 +42,8 @@ export default {
 @media screen and (min-width: 1000px) {
   .v-card {
     display: grid;
-    text-align: -webkit-center;
-    padding: 0.5em;
+    text-align: center;
+    padding: 1em;
     .image_container {
       margin-bottom: 0.5em;
       img {

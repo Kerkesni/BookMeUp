@@ -2,9 +2,11 @@
   <v-container>
     <v-row>
       <v-col cols="2">
-        <Info :data="data" @remove="dialog = true" />
+        <Info @remove="dialog = true" />
       </v-col>
-      <v-col cols="10"></v-col>
+      <v-col cols="10">
+        <Notes/>
+      </v-col>
     </v-row>
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="290">
@@ -27,46 +29,38 @@
 
 <script>
 import Info from "../components/Book/Info";
+import Notes from "../components/Book/Notes";
 import axios from "axios";
 
 export default {
   components: {
     Info,
+    Notes,
   },
   data() {
     return {
-      data: {},
       dialog: false,
     };
   },
   methods: {
-    getData: function() {
-      this.$store
-        .dispatch("findBookById", this.$route.params.id)
-        .then((res) => {
-          this.data = res;
-        });
-    },
     removeBook: function() {
       this.dialog = false;
       let userId = this.$store.getters.getUserId;
+      let bookId = this.$route.params.id
       axios
-        .delete(this.$endpoints.DELBOOK + userId + "/" + this.data.id, {
+        .delete(this.$endpoints.DELBOOK + userId + "/" + bookId, {
           withCredentials: true,
         })
         .then(() => {
-          this.$store.commit("removeBook", this.data.id);
-          this.exists = false;
+          this.$store.commit("removeBook", bookId);
           this.$toasted.success("Book removed");
           this.$router.push("/Library");
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           this.$toasted.error("Error while removing the book");
         });
     },
-  },
-  mounted() {
-    this.getData();
   },
 };
 </script>

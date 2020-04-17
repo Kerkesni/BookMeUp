@@ -31,7 +31,7 @@ export default new Vuex.Store({
     getLibrary: (state) => state.library,
     getUserId: state => state.userId,
     getUsername: state => state.username,
-    getLogedIn: state => state.loggedIn
+    getLoggedIn: state => state.loggedIn
   },
   mutations: {
     setLibrary: (state, lib) => {
@@ -66,7 +66,9 @@ export default new Vuex.Store({
     logOut: (context) => {
       Vue.$cookies.remove("jwtToken")
       context.commit("setUserId", '')
-      context.setLoggedIn("setUserId", false)
+      context.commit("setUsername", '')
+      context.commit("setLoggedIn", false)
+      context.commit('setLibrary', [])
     },
     updateUserData: (context, payload) => {
       payload = payload.split(".")[1];
@@ -78,6 +80,6 @@ export default new Vuex.Store({
         context.commit('setUsername', jwtData.username)
         context.commit('setUserId', jwtData.id)
       }
-    },
+    }
   },
 })
