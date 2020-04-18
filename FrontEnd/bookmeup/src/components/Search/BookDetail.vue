@@ -112,26 +112,51 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+@media screen and (min-width: 1000px) {
+  .container {
     display: grid;
-  .detail {
+    .detail {
+      display: grid;
+      max-height: 80vh;
+      overflow: auto;
+      #title {
+        text-align: -webkit-center;
+        font-size: xx-large;
+      }
+      #authors {
+        text-align: -webkit-center;
+        font-size: larger;
+      }
+      #description {
+        text-align: justify;
+        font-size: medium;
+      }
+      * {
+        padding: 0.5em;
+      }
+    }
+  }
+}
+@media screen and (max-width: 990px) {
+  .container {
     display: grid;
-    max-height: 80vh;
-    overflow: auto;
-    #title {
-      text-align: -webkit-center;
-      font-size: xx-large;
-    }
-    #authors {
-      text-align: -webkit-center;
-      font-size: larger;
-    }
-    #description {
-      text-align: justify;
-      font-size: medium;
-    }
-    * {
-      padding: 0.5em;
+    .detail {
+      display: grid;
+      #title {
+        text-align: -webkit-center;
+        font-size: xx-large;
+      }
+      #authors {
+        text-align: -webkit-center;
+        font-size: larger;
+      }
+      #description {
+        text-align: justify;
+        font-size: medium;
+      }
+      * {
+        padding: 0.5em;
+      }
     }
   }
 }

@@ -44,7 +44,7 @@ module.exports = (req, res, next) => {
                         }, jwtKey, {
                             expiresIn: jwtExpirySeconds
                         })
-                        res.cookie('jwtToken', token, {
+                        res.cookie('jwtPayload', token, {
                             maxAge: jwtExpirySeconds * 1000,
                             httpOnly: true
                         })

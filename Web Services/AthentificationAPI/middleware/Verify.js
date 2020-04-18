@@ -5,7 +5,7 @@ const jwtKey = 'my_secret_key'
 const jwtExpirySeconds = 24 * 60 * 60
 
 const schema = Joi.object({
-    jwtToken: Joi.string()
+    jwtPayload: Joi.string()
         .required(),
 })
 
@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
         res.send("Wrong Data Schema")
         return
     }
-    jwt.verify(data.jwtToken, jwtKey, function (err, decoded) {
+    jwt.verify(data.jwtPayload, jwtKey, function (err, decoded) {
         if (err) {
             res.send(false)
         } else

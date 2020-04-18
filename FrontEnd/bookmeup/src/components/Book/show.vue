@@ -3,7 +3,9 @@
     <div class="data">
       <span id="time">{{ getTime(data.timestamp) }}</span>
       <span id="title">{{ data.title }}</span>
-      <div id="content" v-html="data.content"></div>
+      <div class="ql-container ql-snow">
+        <div class="ql-editor" v-html="data.content"></div>
+      </div>
     </div>
     <div class="buttons">
       <v-btn large @click="$emit('close')">Back</v-btn>
@@ -28,7 +30,7 @@ export default {
 <style lang="scss" scoped>
 @media screen and (min-width: 1000px) {
   .container {
-    padding: 1em;
+    padding: 2em;
     .buttons {
       text-align: center;
       margin-top: 2em;
@@ -45,6 +47,35 @@ export default {
       #time {
         font-size: small;
         margin-bottom: -0.5em;
+      }
+      .ql-container.ql-snow {
+        border: none;
+      }
+    }
+  }
+}
+@media screen and (max-width: 990px) {
+  .container {
+    padding: 0.7em;
+    .buttons {
+      text-align: center;
+      margin-top: 2em;
+      .v-btn {
+        margin: 0.5em;
+        width: 7em;
+      }
+    }
+    .data {
+      display: grid;
+      #title {
+        font-size: xx-large;
+      }
+      #time {
+        font-size: small;
+        margin-bottom: -0.5em;
+      }
+      .ql-container.ql-snow {
+        border: none;
       }
     }
   }

@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     let token = getCookies(req).jwtPayload
     axios
         .post('http://localhost:3003/verify', {
-            jwtToken: token
+            jwtPayload: token
         })
         .then(response => {
             if (response.data) {

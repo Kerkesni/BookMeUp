@@ -87,7 +87,7 @@ export default {
     padding: 1em;
     .title {
       padding: 1em;
-      margin-bottom: -2em;
+      margin-bottom: -1em;
     }
     .editor {
       padding: 1em;
@@ -98,6 +98,26 @@ export default {
       .v-btn {
         margin: 1em;
         width: 9em;
+      }
+    }
+  }
+}
+@media screen and (max-width: 990px) {
+  .container {
+    padding: 1em;
+    .title {
+      padding: 0.5em;
+      margin-bottom: -1em;
+    }
+    .editor {
+      padding: 0.5em;
+      margin-bottom: 1em;
+    }
+    .buttons {
+      text-align: center;
+      .v-btn {
+        margin: 0.5em;
+        width: 7em;
       }
     }
   }

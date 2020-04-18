@@ -7,7 +7,7 @@ const schema = Joi.object({
     userId: Joi.string()
         .required(),
     book: Joi.object().keys({
-        id: Joi.string().required(),
+        _id: Joi.string().required(),
         title: Joi.string().required(),
         authors: Joi.string().required(),
         thumbnail: Joi.string().required(),
@@ -27,7 +27,7 @@ module.exports = (req, res, next) => {
         .then(user => {
             let books = user.books
             books.push(data.book)
-            books = _.uniqBy(books, 'id')
+            books = _.uniqBy(books, '_id')
             userToBook.updateOne({
                     userId: data.userId
                 }, {

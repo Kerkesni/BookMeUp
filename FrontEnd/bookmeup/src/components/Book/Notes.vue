@@ -3,7 +3,7 @@
     <v-card v-if="!add && !show">
       <div class="notes" v-if="notes.length > 0">
         <v-row>
-          <v-col v-for="(note, index) in notes" :key="index" cols="3">
+          <v-col v-for="(note, index) in notes" :key="index" cols="12" lg="3" md="12" sm="12">
             <v-card class="note" @click="select(note._id)">
               <span id="timestamp">{{ getTime(note.timestamp) }}</span>
               <span id="title">{{ note.title }}</span>
@@ -13,10 +13,10 @@
       </div>
       <div class="add">
         <div id="text" v-if="notes.length < 1">No Notes Stored</div>
-        <v-btn color="primary" @click="add = true">Add Note</v-btn>
+        <v-btn color="primary" @click="noteAdd(true)">Add Note</v-btn>
       </div>
     </v-card>
-    <addNote v-if="!show && add" @close="add = false" @addded="updateNotes" />
+    <addNote v-if="!show && add" @close="noteAdd(false)" @addded="updateNotes" />
     <show
       :data="selected"
       v-if="show && !add"
@@ -112,10 +112,17 @@ export default {
     select: function(id) {
       this.show = true;
       this.selectedId = id;
+      this.$emit("addNote", true);
     },
     unselect: function() {
       this.selectedId = "";
       this.show = false;
+      this.$emit("addNote", false);
+
+    },
+    noteAdd: function(add) {
+      this.$emit("addNote", add);
+      this.add = add;
     },
   },
   mounted() {
@@ -141,6 +148,33 @@ export default {
   }
   .notes {
     padding: 1.5em;
+    .note {
+      display: grid;
+      padding: 0.5em;
+      #title {
+        font-size: x-large;
+      }
+      #timestamp {
+        font-size: small;
+      }
+    }
+  }
+}
+@media screen and (max-width: 990px) {
+  .add {
+    padding: 1em;
+    text-align: center;
+    #text {
+      font-weight: lighter;
+      font-size: x-large;
+      padding-bottom: 0.5em;
+    }
+    .v-btn {
+      width: 9em;
+    }
+  }
+  .notes {
+    padding: 1em;
     .note {
       display: grid;
       padding: 0.5em;

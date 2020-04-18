@@ -5,14 +5,14 @@ const Joi = require('@hapi/joi');
 const schema = Joi.object({
     userId: Joi.string()
         .required(),
-    id: Joi.string().required(),
+    bookId: Joi.string().required(),
 })
 
 module.exports = (req, res, next) => {
 
     if (schema.validate({
             userId: req.params.userId,
-            id: req.params.id
+            bookId: req.params.bookId
         }).error) {
         res.status(500)
         res.send("Wrong Data Schema")
@@ -21,18 +21,13 @@ module.exports = (req, res, next) => {
 
     userToBook.findOne({
             userId: req.params.userId
-        }).then((resp) => {
-            let books = resp.books
-            _.remove(books, (book) =>
-                book.id === req.params.id
+        }).then((user) => {
+            user.books = user.books.filter((book) =>
+                book.id !== req.params.bookId
             )
-            userToBook.updateOne({
-                    userId: req.params.userId
-                }, {
-                    books: books
-                })
-                .then(() => res.send("Book Removed"))
-                .catch(() => res.send("Error While removing book"))
+            user.save()
+            res.send(user.books)
+            //res.send("Book Removed")
         })
         .catch(() => res.send("User Not Found"))
 }

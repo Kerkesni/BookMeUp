@@ -38,6 +38,25 @@ export default {
 
 <style lang="scss" scoped>
 @media screen and (max-width: 990px) {
+  .v-card {
+    display: grid;
+    text-align: center;
+    padding: 1em;
+    .image_container {
+      margin-bottom: 0.5em;
+      img {
+        height: 15em;
+      }
+    }
+    .title {
+      font-size: xx-large !important;
+      margin-bottom: 0.5em;
+    }
+    .authors {
+      font-size: larger;
+      margin-bottom: 0.5em;
+    }
+  }
 }
 @media screen and (min-width: 1000px) {
   .v-card {
