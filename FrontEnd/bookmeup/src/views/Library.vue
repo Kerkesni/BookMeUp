@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-if="library.length > 0">
       <v-col
         v-for="(book, index) in library"
         :key="index"
@@ -11,6 +11,13 @@
         <BookCard :data="book" />
       </v-col>
     </v-row>
+    <div v-else class="no_book">
+      <div>No Books Added Yet</div>
+      <div>
+        Add One Now
+        <router-link to="/Search">Now</router-link>
+      </div>
+    </div>
   </v-container>
 </template>
 
@@ -49,5 +56,10 @@ export default {
       display: block;
     }
   }
+}
+.no_book {
+  text-align: center;
+  font-size: x-large;
+  font-weight: lighter;
 }
 </style>

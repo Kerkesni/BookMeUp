@@ -99,7 +99,7 @@ export default {
       axios
         .post(this.$endpoints.SIGNUP, {
           username: this.username,
-          email: this.email,
+          email: this.email.toLowerCase(),
           password: this.password,
         })
         .then((res) => {

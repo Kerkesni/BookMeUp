@@ -76,7 +76,7 @@
         </v-list-item>
         <v-list-item>
           <v-list-item-title
-            ><v-btn text to="/Sign Up">
+            ><v-btn text to="/SignUp">
               Sign Up
             </v-btn>
           </v-list-item-title>

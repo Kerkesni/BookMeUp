@@ -26,7 +26,8 @@ const routes = [{
     name: 'Home',
     component: Home,
     meta: {
-      layout: 'default'
+      layout: 'default',
+      requiresAuth: true
     }
   },
   {

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="Search">
+    <div class="Search" :class="{ center: results.length < 1 }">
       <v-text-field
         dense
         label="Title or Author"
@@ -96,6 +96,9 @@ export default {
       position: absolute;
     }
   }
+  .center {
+    margin-top: 5vh;
+  }
 }
 @media screen and (min-width: 1000px) {
   .Search {
@@ -110,6 +113,9 @@ export default {
   .loader {
     margin: auto;
     width: 50%;
+  }
+  .center {
+    margin-top: 30vh;
   }
 }
 </style>

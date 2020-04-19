@@ -63,7 +63,7 @@ export default {
     login: function() {
       axios
         .post(this.$endpoints.LOGIN, {
-          email: this.email,
+          email: this.email.toLowerCase(),
           password: this.password,
         })
         .then((res) => {

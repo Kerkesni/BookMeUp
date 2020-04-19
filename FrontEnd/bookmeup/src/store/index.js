@@ -23,6 +23,7 @@ const isTokenExpired = (payload) => {
 export default new Vuex.Store({
   state: {
     library: [],
+    tracking: {},
     userId: '',
     username: '',
     loggedIn: false,
@@ -31,7 +32,8 @@ export default new Vuex.Store({
     getLibrary: (state) => state.library,
     getUserId: state => state.userId,
     getUsername: state => state.username,
-    getLoggedIn: state => state.loggedIn
+    getLoggedIn: state => state.loggedIn,
+    getTracking: state => state.tracking,
   },
   mutations: {
     setLibrary: (state, lib) => {
@@ -52,6 +54,12 @@ export default new Vuex.Store({
     },
     setLoggedIn: (state, isLogged) => {
       state.loggedIn = isLogged
+    },
+    setTracking: (state, tracking) => {
+      state.tracking = tracking
+    },
+    addPages: (state, data) => {
+      state.tracking.dates.push(data)
     }
   },
   actions: {
@@ -64,11 +72,12 @@ export default new Vuex.Store({
       return result
     },
     logOut: (context) => {
-      Vue.$cookies.remove("jwtToken")
+      Vue.$cookies.remove("jwtPayload")
       context.commit("setUserId", '')
       context.commit("setUsername", '')
       context.commit("setLoggedIn", false)
       context.commit('setLibrary', [])
+      context.commit('setTracking', {})
     },
     updateUserData: (context, payload) => {
       payload = payload.split(".")[1];

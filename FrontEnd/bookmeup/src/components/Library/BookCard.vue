@@ -17,9 +17,9 @@ export default {
     return {};
   },
   methods: {
-    showBook: function(){
-      this.$router.push('/Book/'+this.data.id)
-    }
+    showBook: function() {
+      this.$router.push("/Book/" + this.data.id);
+    },
   },
 };
 </script>

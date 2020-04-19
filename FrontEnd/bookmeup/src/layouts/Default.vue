@@ -26,9 +26,22 @@ export default {
           this.$toasted.error("Error while Loading Library");
         });
     },
+    getTrackings: function() {
+      axios
+        .get(this.$endpoints.GETTRACKING + this.$store.getters.getUserId, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          this.$store.commit("setTracking", res.data);
+        })
+        .catch((err) => this.$toasted.error(err));
+    },
   },
   mounted() {
-    if (this.$store.getters.getUserId) this.loadLibrary();
+    if (this.$store.getters.getUserId) {
+      this.loadLibrary();
+      this.getTrackings();
+    }
   },
 };
 </script>

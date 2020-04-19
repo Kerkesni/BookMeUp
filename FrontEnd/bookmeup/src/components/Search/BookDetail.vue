@@ -73,6 +73,7 @@ export default {
               title: this.data.title,
               authors: this.formatAuthors(this.data.authors),
               thumbnail: this.data.thumbnail,
+              total_pages: this.data.total_pages
             },
           },
           { withCredentials: true }
@@ -81,6 +82,7 @@ export default {
           let book = _.cloneDeep(this.data);
           book.id = this.id;
           book.authors = this.formatAuthors(this.data.authors);
+          book.current_page = 0
           this.$store.commit("addBook", book);
           this.exists = true;
           this.$toasted.success("Book Added");
@@ -117,6 +119,7 @@ export default {
     display: grid;
     .detail {
       display: grid;
+      padding: 0.5em;
       max-height: 80vh;
       overflow: auto;
       #title {
@@ -132,7 +135,8 @@ export default {
         font-size: medium;
       }
       * {
-        padding: 0.5em;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
       }
     }
   }
