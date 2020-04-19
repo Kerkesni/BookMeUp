@@ -32,6 +32,11 @@ const server = gateway({
             methods: ['POST'],
             target: 'http://127.0.0.1:3003',
         },
+        {
+            prefix: '/track',
+            methods: ['GET', 'POST', 'DELETE'],
+            target: 'http://127.0.0.1:3004',
+        },
     ]
 })
 

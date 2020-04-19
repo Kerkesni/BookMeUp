@@ -44,7 +44,16 @@ var userToBooks = new Schema({
         type: Number,
         required: false
       }
-    }]
+    }],
+    current_page: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    total_pages: {
+      type: Number,
+      required: true,
+    },
   }],
 });
 

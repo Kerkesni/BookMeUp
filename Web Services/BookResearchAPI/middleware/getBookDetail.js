@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
             authors: json['volumeInfo']['authors'],
             description: json['volumeInfo']['description'],
             categories: json['volumeInfo']['categories'],
-            pageCount: json['volumeInfo']['pageCount'],
+            total_pages: json['volumeInfo']['pageCount'],
             averageRating: json['volumeInfo']['averageRating'],
             publisher: json['volumeInfo']['publisher'],
             publishedDate: json['volumeInfo']['publishedDate'],

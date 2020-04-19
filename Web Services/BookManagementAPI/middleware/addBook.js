@@ -11,6 +11,7 @@ const schema = Joi.object({
         title: Joi.string().required(),
         authors: Joi.string().required(),
         thumbnail: Joi.string().required(),
+        total_pages: Joi.number().required()
     })
 })
 

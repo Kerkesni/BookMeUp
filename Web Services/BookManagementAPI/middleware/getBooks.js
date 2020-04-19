@@ -13,7 +13,9 @@ module.exports = (req, res, next) => {
                         id: book.id,
                         title: book.title,
                         authors: book.authors,
-                        thumbnail: book.thumbnail
+                        thumbnail: book.thumbnail,
+                        current_page: book.current_page,
+                        total_pages: book.total_pages
                     }
                 })
                 res.send(books)
