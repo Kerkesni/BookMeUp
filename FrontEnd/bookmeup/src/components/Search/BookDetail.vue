@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import _ from "lodash";
+import {getBookDetails} from '../../api/search.api'
+import {addBook, delBook} from '../../api/manage.api'
 
 export default {
   props: ["id"],
@@ -45,8 +46,7 @@ export default {
   },
   methods: {
     fetchData: function() {
-      axios
-        .get(this.$endpoints.DETAILS + this.id, { withCredentials: true })
+      getBookDetails(this.id)
         .then((res) => {
           this.data = res.data;
           this.$store
@@ -63,10 +63,7 @@ export default {
       return tmp;
     },
     addToLibrary: function() {
-      axios
-        .post(
-          this.$endpoints.ADDBOOK,
-          {
+      addBook({
             userId: this.$store.getters.getUserId,
             book: {
               _id: this.id,
@@ -74,10 +71,8 @@ export default {
               authors: this.formatAuthors(this.data.authors),
               thumbnail: this.data.thumbnail,
               total_pages: this.data.total_pages
-            },
-          },
-          { withCredentials: true }
-        )
+            }
+      })
         .then(() => {
           let book = _.cloneDeep(this.data);
           book.id = this.id;
@@ -93,10 +88,7 @@ export default {
     },
     removeFromLibrary: function() {
       let userId = this.$store.getters.getUserId;
-      axios
-        .delete(this.$endpoints.DELBOOK + userId + "/" + this.id, {
-          withCredentials: true,
-        })
+      delBook(userId, this.id)
         .then(() => {
           this.$store.commit("removeBook", this.id);
           this.exists = false;

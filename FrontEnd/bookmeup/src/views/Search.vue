@@ -34,7 +34,7 @@
 <script>
 import SearchResults from "../components/Search/SearchResults";
 import BookDetail from "../components/Search/BookDetail";
-import axios from "axios";
+import {searchBook} from "../api/search.api"
 
 export default {
   components: {
@@ -54,11 +54,8 @@ export default {
       if (!this.title) return;
       this.isLoading = true;
       let formatted_title = this.title.replace(/ /g, "+");
-      axios
-        .get(this.$endpoints.SEARCH + formatted_title, {
-          withCredentials: true,
-        })
-        .then((res) => {
+      searchBook(formatted_title)
+      .then((res) => {
           this.results = res.data;
         });
       this.isLoading = false;

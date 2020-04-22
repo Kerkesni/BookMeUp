@@ -9,6 +9,7 @@ import Toasted from 'vue-toasted';
 import VueCookies from "vue-cookies"
 import Vuelidate from "vuelidate"
 import VueQuillEditor from 'vue-quill-editor'
+import VueKeyCloak from '@dsb-norge/vue-keycloak-js'
 
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
@@ -21,7 +22,7 @@ import noTopBar_Layout from './layouts/NoTopBar.vue'
 let toasted_options = {
   theme: "toasted-primary",
   position: "bottom-left",
-  duration: 5000
+  duration: 2000
 }
 
 Vue.use(VueQuillEditor, /* { default global options } */)
@@ -37,9 +38,18 @@ Vue.prototype.$endpoints = endpoints
 Vue.component("default-layout", default_Layout)
 Vue.component("unauthenticated-layout", noTopBar_Layout)
 
-new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+Vue.use(VueKeyCloak, {
+  config: {
+    realm: 'BookMeUp',
+    url: 'http://localhost:8080/auth',
+    clientId: 'website'
+  },
+  onReady: () => {
+    new Vue({
+      router,
+      store,
+      vuetify,
+      render: h => h(App)
+    }).$mount('#app')
+  }
+})

@@ -30,7 +30,7 @@
 <script>
 import Info from "../components/Book/Info";
 import Notes from "../components/Book/Notes";
-import axios from "axios";
+import {delBook} from "../api/manage.api";
 
 export default {
   components: {
@@ -48,10 +48,7 @@ export default {
       this.dialog = false;
       let userId = this.$store.getters.getUserId;
       let bookId = this.$route.params.id;
-      axios
-        .delete(this.$endpoints.DELBOOK + userId + "/" + bookId, {
-          withCredentials: true,
-        })
+      delBook(userId,bookId)
         .then(() => {
           this.$store.commit("removeBook", bookId);
           this.$toasted.success("Book removed");

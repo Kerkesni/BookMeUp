@@ -44,7 +44,7 @@ import {
   maxValue,
 } from "vuelidate/lib/validators";
 import moment from "moment";
-import axios from "axios";
+import {addPages} from "../../api/tracking.api";
 
 const lessThanDate = (finish) => (value) =>
   moment.unix(finish).diff(moment(value), "days") >= 0;
@@ -80,8 +80,7 @@ export default {
         date: moment(this.date).unix(),
         pages: parseInt(this.pages),
       };
-      axios
-        .post(this.$endpoints.ADDPAGES, data, { withCredentials: true })
+      addPages(data)
         .then(() => {
           this.$store.commit("addPages", data);
           this.$toasted.success("Pages Successfully Added");

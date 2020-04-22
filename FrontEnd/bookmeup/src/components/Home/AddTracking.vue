@@ -64,7 +64,7 @@
 <script>
 import { required, integer, minValue } from "vuelidate/lib/validators";
 import moment from "moment";
-import axios from "axios";
+import {addTracking} from "../../api/tracking.api"
 
 export default {
   props: ["lib"],
@@ -119,10 +119,9 @@ export default {
         finish_date: moment(this.finish_date).unix(),
         last_read: moment().unix(),
       };
-      axios
-        .post(this.$endpoints.ADDTRACKING, tracking, { withCredentials: true })
+      addTracking(tracking)
         .then(() => {
-          tracking.add_date = tracking.last_read;
+          tracking.total_pages = this.total_pages
           this.$store.commit("setTracking", tracking);
           this.$toasted.success("Tracking Added");
           this.$emit("close");

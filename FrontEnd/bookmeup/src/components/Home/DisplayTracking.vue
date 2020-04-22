@@ -103,8 +103,8 @@
 <script>
 import AddPagesForm from "./AddPagesForm";
 import moment from "moment";
-import axios from "axios";
 import _ from "lodash";
+import {delTracking} from "../../api/tracking.api";
 
 export default {
   props: ["data", "title"],
@@ -185,11 +185,7 @@ export default {
       this.setGraphData();
     },
     untrack: function() {
-      axios
-        .delete(
-          this.$endpoints.DELTRACKING + this.data.UID + "/" + this.data.BID,
-          { withCredentials: true }
-        )
+      delTracking(this.data.UID,this.data.BID)
         .then(() => {
           this.$store.commit("setTracking", {});
           this.$toasted.success("Tracking Removed");

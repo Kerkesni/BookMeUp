@@ -47,7 +47,7 @@ import addNote from "./addNote";
 import show from "./show";
 
 import moment from "moment";
-import axios from "axios";
+import {getNotes, delNote} from "../../api/manage.api"
 
 export default {
   components: {
@@ -71,14 +71,7 @@ export default {
   },
   methods: {
     getNotes: function() {
-      axios
-        .get(
-          this.$endpoints.GETNOTES +
-            this.$store.getters.getUserId +
-            "/" +
-            this.id,
-          { withCredentials: true }
-        )
+      getNotes(this.$store.getters.getUserId,this.id)
         .then((res) => (this.notes = res.data))
         .catch(() => this.$toasted.error("Error While Getting Notes"));
     },
@@ -87,18 +80,7 @@ export default {
       this.getNotes();
     },
     removeNote: function() {
-      axios
-        .delete(
-          this.$endpoints.DELNOTE +
-            this.$store.getters.getUserId +
-            "/" +
-            this.id +
-            "/" +
-            this.selectedId,
-          {
-            withCredentials: true,
-          }
-        )
+      delNote(this.$store.getters.getUserId,this.id,this.selectedId)
         .then(() => {
           this.modal = false;
           this.unselect();

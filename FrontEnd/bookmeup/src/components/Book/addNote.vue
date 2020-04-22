@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import {addNote} from '../../api/manage.api'
 
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"], // toggled buttons
@@ -55,9 +55,7 @@ export default {
       this.$emit("close");
     },
     saveNote: function() {
-      axios
-        .post(
-          this.$endpoints.ADDNOTE,
+      addNote(
           {
             userId: this.$store.getters.getUserId,
             bookId: this.$route.params.id,
@@ -66,9 +64,6 @@ export default {
               content: this.content,
               timestamp: Date.now(),
             },
-          },
-          {
-            withCredentials: true,
           }
         )
         .then(()=>{
