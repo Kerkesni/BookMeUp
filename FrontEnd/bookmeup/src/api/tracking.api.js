@@ -1,6 +1,6 @@
 import httpClient from "./httpClient"
 
-const END_POINT = 'http://localhost:3003';
+const END_POINT = 'track';
 
 const getTrackings = (id) => httpClient.get(END_POINT+"/getTrackings/"+id);
 

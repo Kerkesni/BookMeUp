@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: website
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      containers:
+      - image: zanziba/front-end:1.0
+        name: website
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: website
+spec:
+  ports:
+  - port: 8080
+    targetPort: 80
+    nodePort: 30036
+    protocol: TCP
+  selector:
+    app: website
+  type: NodePort

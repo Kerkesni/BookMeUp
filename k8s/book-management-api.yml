@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-management-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-management-api
+  template:
+    metadata:
+      labels:
+        app: book-management-api
+    spec:
+      containers:
+        - name: book-management-api
+          image: zanziba/book-management-api:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-management-api
+spec:
+  selector:
+    app: book-management-api
+  ports:
+    - port: 3002
+      targetPort: 3000
+      protocol: TCP
+  type: ClusterIP

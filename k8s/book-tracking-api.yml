@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-tracking-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-tracking-api
+  template:
+    metadata:
+      labels:
+        app: book-tracking-api
+    spec:
+      containers:
+        - name: book-tracking-api
+          image: zanziba/book-tracking-api:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-tracking-api
+spec:
+  selector:
+    app: book-tracking-api
+  ports:
+    - port: 3003
+      targetPort: 3000
+      protocol: TCP
+  type: ClusterIP

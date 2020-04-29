@@ -1,0 +1,8 @@
+version: "3"
+services:
+  book-management-api:
+    image: zanziba/book-management-api:1.0
+    restart: always
+    build: ../Web_Services/BookManagementAPI
+    ports:
+      - 3000:3000

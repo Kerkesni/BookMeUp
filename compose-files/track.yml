@@ -1,0 +1,8 @@
+version: "3"
+services:
+  book-tracking-api:
+    image: zanziba/book-tracking-api:1.0
+    restart: always
+    build: ../Web_Services/TrackingAPI
+    ports:
+      - 3000:3000

@@ -1,0 +1,66 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mongo-manage-pv
+  labels:
+    type: local
+spec:
+  storageClassName: mongo-manage-pv
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/manage"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-manage
+spec:
+  selector:
+    app: mongo-manage
+  ports:
+    - port: 27017
+      targetPort: 27017
+      protocol: TCP
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-manage
+spec:
+  selector:
+    matchLabels:
+      app: mongo-manage
+  template:
+    metadata:
+      labels:
+        app: mongo-manage
+    spec:
+      containers:
+        - name: mongo-manage
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-manage-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-manage-storage
+          persistentVolumeClaim:
+            claimName: mongo-manage-pvc
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-manage-pvc
+spec:
+  storageClassName: mongo-manage-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

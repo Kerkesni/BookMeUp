@@ -1,6 +1,6 @@
 import httpClient from "./httpClient"
 
-const END_POINT = 'http://localhost:3002';
+const END_POINT = 'manage';
 
 const getBooks = (id) => httpClient.get(END_POINT+"/getBooks/"+id);
 

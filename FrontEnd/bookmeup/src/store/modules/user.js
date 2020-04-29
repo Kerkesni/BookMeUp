@@ -1,32 +1,55 @@
 import Vue from "vue"
 
+const getTokenExpirationDate = (payload) => {
+    const jwtData = JSON.parse(atob(payload))
+    if (!jwtData.exp) {
+      return null
+    }
+  
+    const date = new Date(0)
+    date.setUTCSeconds(jwtData.exp)
+  
+    return date
+  }
+const isTokenExpired = (payload) => {
+  const expirationDate = getTokenExpirationDate(payload)
+  return expirationDate < new Date()
+}
+
 export default {
     state:{
-        username:'',
-        userId:'',
+        userId: '',
+        username: '',
         isLogged: false
     },
     getters:{
-        getUsername: (state) => state.username,
-        getUserId: (state) => state.userId,
+        getUserId: state => state.userId,
+        getUsername: state => state.username,
         isLogged: (state) => state.isLogged
     },
     mutations:{
-        login: (state) =>{
-            if(!Vue.prototype.$keycloak.authenticated)
-                return
-            state.username = Vue.prototype.$keycloak.userName
-            state.userId = Vue.prototype.$keycloak.subject
-            state.isLogged = true
-        },
-        logout: (state) => {
-            Vue.prototype.$keycloak.logoutFn()
-            .then(()=>{
-                state.username = ""
-                state.userId = ""
-                state.isLogged = false
-            })
-            .catch((err)=>console.log(err))
+      setUserId: (state, value) => state.userId = value,
+      setUsername: (state, value) => state.username = value,
+      setIsLogged: (state, value) => state.isLogged = value
+    },actions:{
+      login: (state, payload) =>{
+        if (isTokenExpired(payload)) {
+          state.commit('setIsLogged', false)
+        } else {
+          const jwtData = JSON.parse(atob(payload)).data
+          state.commit('setIsLogged', true)
+          state.commit('setUsername', jwtData.username)
+          state.commit('setUserId', jwtData.id)
+          state.dispatch("loadLibrary")
+          state.dispatch("getTracking")
         }
+    },
+    logout: (state) => {
+        Vue.$cookies.remove("jwtPayload")
+        state.username = ''
+        state.userId = ''
+        state.commit('emptyLibrary')
+        state.commit('removeTracking')
+    }
     }
 }

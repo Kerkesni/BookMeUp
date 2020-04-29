@@ -1,0 +1,66 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mongo-auth-pv
+  labels:
+    type: local
+spec:
+  storageClassName: mongo-auth-pv
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/auth"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-auth
+spec:
+  selector:
+    app: mongo-auth
+  ports:
+    - port: 27019
+      targetPort: 27017
+      protocol: TCP
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-auth
+spec:
+  selector:
+    matchLabels:
+      app: mongo-auth
+  template:
+    metadata:
+      labels:
+        app: mongo-auth
+    spec:
+      containers:
+        - name: mongo-auth
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-auth-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-auth-storage
+          persistentVolumeClaim:
+            claimName: mongo-auth-pvc
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-auth-pvc
+spec:
+  storageClassName: mongo-auth-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

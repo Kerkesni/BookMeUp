@@ -1,0 +1,26 @@
+version: "3"
+services:
+  book-tracking-api:
+    image: zanziba/auth-api:1.0
+    restart: always
+    build: ../Web_Services/AuthenticationAPI
+    ports:
+      - 3000:3000
+  book-management-api:
+    image: zanziba/book-management-api:1.0
+    restart: always
+    build: ../Web_Services/BookManagementAPI
+    ports:
+      - 3000:3000
+  book-research-api:
+    image: zanziba/book-research-api:1.0
+    restart: always
+    build: ../Web_Services/BookResearchAPI
+    ports:
+      - 3000:3000
+  website:
+    image: zanziba/front-end:1.0
+    restart: always
+    build: ../FrontEnd/bookmeup
+    ports:
+      - 8080:80

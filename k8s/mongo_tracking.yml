@@ -1,0 +1,66 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mongo-tracking-pv
+  labels:
+    type: local
+spec:
+  storageClassName: mongo-tracking-pv
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/track"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-tracking
+spec:
+  selector:
+    app: mongo-tracking
+  ports:
+    - port: 27018
+      targetPort: 27017
+      protocol: TCP
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-tracking
+spec:
+  selector:
+    matchLabels:
+      app: mongo-tracking
+  template:
+    metadata:
+      labels:
+        app: mongo-tracking
+    spec:
+      containers:
+        - name: mongo-tracking
+          image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-tracking-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-tracking-storage
+          persistentVolumeClaim:
+            claimName: mongo-tracking-pvc
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-tracking-pvc
+spec:
+  storageClassName: mongo-tracking-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

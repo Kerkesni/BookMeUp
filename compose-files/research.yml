@@ -1,0 +1,8 @@
+version: "3"
+services:
+  book-research-api:
+    image: zanziba/book-research-api:1.0
+    restart: always
+    build: ../Web_Services/BookResearchAPI
+    ports:
+      - 3000:3000

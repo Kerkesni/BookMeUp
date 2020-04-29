@@ -20,6 +20,14 @@
             Logout
           </v-btn>
         </v-toolbar-items>
+        <v-toolbar-items v-else>
+          <v-btn text to="/Login">
+            Login
+          </v-btn>
+          <v-btn text to="/Signup">
+            Sign UP
+          </v-btn>
+        </v-toolbar-items>
       </div>
       <div class="mobile">
         <v-btn icon @click="menu = !menu">
@@ -58,6 +66,22 @@
           </v-list-item-title>
         </v-list-item>
       </v-list>
+      <v-list v-if="menu && !isLogged" class="mobile_menu">
+        <v-list-item>
+          <v-list-item-title
+            ><v-btn text to="/Login">
+              Login
+            </v-btn>
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title
+            ><v-btn text to="/SignUp">
+              Sign Up
+            </v-btn>
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
     </transition>
   </div>
 </template>
@@ -71,14 +95,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLogged"]),
+    ...mapGetters({
+      isLogged: "isLogged",
+    }),
   },
   methods: {
     logout: function() {
-      this.$store.commit("logout");
+      this.$store.dispatch("logOut");
+      this.$router.push("/Login");
     },
   },
-
 };
 </script>
 

@@ -1,0 +1,18 @@
+{
+  "name": "BookResearchAPI",
+  "version": "1.0.0",
+  "description": "Api For Searching and Getting Information About a Specific Book",
+  "main": "app.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "nodemon": "^2.0.3",
+    "request": "^2.88.2"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  }
+}
